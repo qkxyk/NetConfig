@@ -32,9 +32,9 @@ namespace NetConfig
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmNetConfig));
             this.btnClient = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.txtPort = new System.Windows.Forms.TextBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.comboBox_MQTT_Index = new System.Windows.Forms.ComboBox();
             this.textBox_SYS_uuid = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.textBox_MQTT_KeepAliveTime = new System.Windows.Forms.TextBox();
@@ -71,7 +71,6 @@ namespace NetConfig
             this.txtMask = new ControlLibrary.IPControl.IPAddressControl();
             this.txtIp = new ControlLibrary.IPControl.IPAddressControl();
             this.txtMac = new System.Windows.Forms.TextBox();
-            this.label41 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
@@ -88,8 +87,6 @@ namespace NetConfig
             this.btnClose = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.readStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.comboBox_MQTT_Index = new System.Windows.Forms.ComboBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnReadConfig = new System.Windows.Forms.Button();
             this.groupBox6.SuspendLayout();
@@ -119,15 +116,6 @@ namespace NetConfig
             this.label1.TabIndex = 2;
             this.label1.Text = "设备地址:";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(248, 34);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 12);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "端口：";
-            // 
             // txtPort
             // 
             this.txtPort.Location = new System.Drawing.Point(286, 29);
@@ -140,7 +128,6 @@ namespace NetConfig
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.comboBox_MQTT_Index);
-            this.groupBox6.Controls.Add(this.label3);
             this.groupBox6.Controls.Add(this.textBox_SYS_uuid);
             this.groupBox6.Controls.Add(this.label4);
             this.groupBox6.Controls.Add(this.textBox_MQTT_KeepAliveTime);
@@ -166,6 +153,14 @@ namespace NetConfig
             this.groupBox6.TabIndex = 4;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "MQTT";
+            // 
+            // comboBox_MQTT_Index
+            // 
+            this.comboBox_MQTT_Index.FormattingEnabled = true;
+            this.comboBox_MQTT_Index.Location = new System.Drawing.Point(95, 24);
+            this.comboBox_MQTT_Index.Name = "comboBox_MQTT_Index";
+            this.comboBox_MQTT_Index.Size = new System.Drawing.Size(121, 20);
+            this.comboBox_MQTT_Index.TabIndex = 22;
             // 
             // textBox_SYS_uuid
             // 
@@ -476,7 +471,6 @@ namespace NetConfig
             this.gbNet.Controls.Add(this.txtMask);
             this.gbNet.Controls.Add(this.txtIp);
             this.gbNet.Controls.Add(this.txtMac);
-            this.gbNet.Controls.Add(this.label41);
             this.gbNet.Controls.Add(this.label40);
             this.gbNet.Controls.Add(this.label39);
             this.gbNet.Controls.Add(this.label38);
@@ -518,15 +512,6 @@ namespace NetConfig
             this.txtMac.Size = new System.Drawing.Size(180, 21);
             this.txtMac.TabIndex = 1;
             this.txtMac.Text = "72.81.81.81.85.103";
-            // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(22, 101);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(59, 12);
-            this.label41.TabIndex = 0;
-            this.label41.Text = "MAC地址：";
             // 
             // label40
             // 
@@ -682,23 +667,6 @@ namespace NetConfig
             this.readStatus.Name = "readStatus";
             this.readStatus.Size = new System.Drawing.Size(0, 17);
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(30, 28);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 12);
-            this.label3.TabIndex = 21;
-            this.label3.Text = "Clientidx:";
-            // 
-            // comboBox_MQTT_Index
-            // 
-            this.comboBox_MQTT_Index.FormattingEnabled = true;
-            this.comboBox_MQTT_Index.Location = new System.Drawing.Point(95, 24);
-            this.comboBox_MQTT_Index.Name = "comboBox_MQTT_Index";
-            this.comboBox_MQTT_Index.Size = new System.Drawing.Size(121, 20);
-            this.comboBox_MQTT_Index.TabIndex = 22;
-            // 
             // btnSave
             // 
             this.btnSave.Location = new System.Drawing.Point(666, 29);
@@ -737,7 +705,6 @@ namespace NetConfig
             this.Controls.Add(this.btnSendMessage);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.txtPort);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnClient);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -767,7 +734,6 @@ namespace NetConfig
 
         private System.Windows.Forms.Button btnClient;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtPort;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.TextBox textBox_SYS_uuid;
@@ -803,7 +769,6 @@ namespace NetConfig
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.GroupBox gbNet;
         private System.Windows.Forms.TextBox txtMac;
-        private System.Windows.Forms.Label label41;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.Label label38;
@@ -824,7 +789,6 @@ namespace NetConfig
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel readStatus;
         private System.Windows.Forms.ComboBox comboBox_MQTT_Index;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnReadConfig;
     }
