@@ -1,0 +1,6 @@
+.vs
+.editorconfig
+packages
+NetConfig/bin
+NetConfig/obj
+
