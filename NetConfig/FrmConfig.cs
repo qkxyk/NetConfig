@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using Cowboy.Sockets;
 using Newtonsoft.Json;
 using System.IO;
+using Newtonsoft.Json.Converters;
 
 namespace NetConfig
 {
@@ -26,7 +27,7 @@ namespace NetConfig
         public void InitData()
         {
             comboBox_MQTT_Index.Items.AddRange(new string[] { "0", "1" });
-            comboBox_MQTT_Index.SelectedIndex = 0;
+            comboBox_MQTT_Index.SelectedIndex = 1;
             comboBox_MQTT_Ver.Items.Add("3.1");
             comboBox_MQTT_Ver.Items.Add("3.1.1");
             comboBox_MQTT_Ver.SelectedIndex = 1;
@@ -76,8 +77,43 @@ namespace NetConfig
             // txtMac.TextAlign = HorizontalAlignment.Center;
 
         }
+        private void InitSubView()
+        {
+            lvSub.GridLines = true;
+            lvSub.View = View.Details;
+            lvSub.FullRowSelect = true;
+            //lvSub.Columns.Add("test");
+            lvSub.Columns.Add(new ColumnHeader { Text = "主题", Width = 329, TextAlign = HorizontalAlignment.Left });
+            lvSub.Columns.Add(new ColumnHeader { Text = "Qos", Width = 30 });
+            //lvSub.Columns.Add("客户端", 125, HorizontalAlignment.Left);
+            //lvSub.Columns.Add("消息内容", 350, HorizontalAlignment.Left);
+            //lvSub.Columns.Add("时间", 140, HorizontalAlignment.Left);
+            //for (int i = 0; i < 4; i++)   //添加10行数据  
+            //{
+            //    ListViewItem lvi = new ListViewItem();
+
+            //                lvi.Text = "subitem" + i;
+
+            //    lvi.SubItems.Add(  i.ToString());
+
+
+            //    this.lvSub.Items.Add(lvi);
+            //}
+
+
+        }
         private void btnClient_Click(object sender, EventArgs e)
         {
+            // DateTime dt = DateTime.Now;
+            // IsoDateTimeConverter timeFormat = new IsoDateTimeConverter();
+            // timeFormat.DateTimeFormat = "yyyy-MM-dd'T'HH:mm:sszzz";
+
+            // //string strDate = dt.ToString();
+            // string strDate =   JsonConvert.SerializeObject(dt,Formatting.Indented,timeFormat);
+            ////strDate = dt.ToString("yyyy-MM-dd'T'HH:mm:sszzz");
+            // //SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            // MessageBox.Show(strDate);
+            // return;
             var config = new TcpSocketClientConfiguration();
             //config.NoDelay = true;
             config.FrameBuilder = new RawBufferFrameBuilder();
@@ -160,8 +196,9 @@ namespace NetConfig
                     if (mess.data.SubTopic != null)
                     {
                         var sub = mess.data.SubTopic;
-                        textBox_TOPIC_Subscribe_TopicName.Text = sub.Topic;
-                        comboBox_TOPIC_Subscribe_Qos.SelectedItem = sub.Qos;
+                        //textBox_TOPIC_Subscribe_TopicName.Text = sub.Topic;
+                        //comboBox_TOPIC_Subscribe_Qos.SelectedItem = sub.Qos;
+                        SetLvSub(sub);
                     }
                     if (mess.data.PubTopic != null)
                     {
@@ -196,6 +233,7 @@ namespace NetConfig
             }
             catch (Exception ex)
             {
+                //MessageBox.Show("接收");
                 Console.WriteLine(ex.Message);
             }
 
@@ -204,6 +242,7 @@ namespace NetConfig
 
         private void btnSendMessage_Click(object sender, EventArgs e)
         {
+
             PackageData md = new PackageData();
             md.action = "writedata";
             int index = 0;
@@ -276,9 +315,9 @@ namespace NetConfig
             mess.UserName = User;
 
             string password = textBox_MQTT_Password.Text;
-            if (password.Length >= 10)
+            if (password.Length >= 20)
             {
-                MessageBox.Show("密码长度不能超过9个字符");
+                MessageBox.Show("密码长度不能超过19个字符");
             }
             mess.UserPwd = password;
             if (comboBox_MQTT_Ver.SelectedItem == null)
@@ -309,11 +348,12 @@ namespace NetConfig
             pm.Interval = int.Parse(publishInterval);
             md.data.PubTopic = pm;
 
-            SubMessage sub = new SubMessage();
-            string subTopic = textBox_TOPIC_Subscribe_TopicName.Text;
-            string subQos = comboBox_TOPIC_Subscribe_Qos.SelectedItem.ToString();
-            sub.Topic = subTopic;
-            sub.Qos = int.Parse(subQos);
+            //SubMessage sub = new SubMessage();
+            //string subTopic = textBox_TOPIC_Subscribe_TopicName.Text;
+            //string subQos = comboBox_TOPIC_Subscribe_Qos.SelectedItem.ToString();
+            //sub.Topic = subTopic;
+            //sub.Qos = int.Parse(subQos);
+            var sub = GetSubMessage();
             md.data.SubTopic = sub;
             WillMessage will = new WillMessage();
             string willTopic = textBox_TOPIC_Will_TopicName.Text;
@@ -346,8 +386,9 @@ namespace NetConfig
             }
 
             md.data.Lan = lan;
-
-            string message = JsonConvert.SerializeObject(md);
+            IsoDateTimeConverter timeFormat = new IsoDateTimeConverter();
+            timeFormat.DateTimeFormat = "yyyy-MM-dd'T'HH:mm:sszzz";
+            string message = JsonConvert.SerializeObject(md, timeFormat);
             if (_client.State == TcpSocketConnectionState.Connected)
             {
                 _client.Send(Encoding.UTF8.GetBytes(message));
@@ -358,6 +399,7 @@ namespace NetConfig
         private void FrmNetConfig_Load(object sender, EventArgs e)
         {
             InitData();
+            InitSubView();
         }
 
         private void btnRead_Click(object sender, EventArgs e)
@@ -494,7 +536,7 @@ namespace NetConfig
         //保存配置文件
         private void btnSave_Click(object sender, EventArgs e)
         {
-         
+
 
             PackageData md = new PackageData();
             md.action = "writedata";
@@ -601,11 +643,12 @@ namespace NetConfig
             pm.Interval = int.Parse(publishInterval);
             md.data.PubTopic = pm;
 
-            SubMessage sub = new SubMessage();
-            string subTopic = textBox_TOPIC_Subscribe_TopicName.Text;
-            string subQos = comboBox_TOPIC_Subscribe_Qos.SelectedItem.ToString();
-            sub.Topic = subTopic;
-            sub.Qos = int.Parse(subQos);
+            //SubMessage sub = new SubMessage();
+            //string subTopic = textBox_TOPIC_Subscribe_TopicName.Text;
+            //string subQos = comboBox_TOPIC_Subscribe_Qos.SelectedItem.ToString();
+            //sub.Topic = subTopic;
+            //sub.Qos = int.Parse(subQos);
+            var sub = GetSubMessage();
             md.data.SubTopic = sub;
             WillMessage will = new WillMessage();
             string willTopic = textBox_TOPIC_Will_TopicName.Text;
@@ -648,12 +691,12 @@ namespace NetConfig
             {
                 //修改文件  
                 string readText = File.ReadAllText(file);
-                 js = JsonConvert.DeserializeObject<List<SavePackage>>(readText);
+                js = JsonConvert.DeserializeObject<List<SavePackage>>(readText);
                 var pd = js.Find(a => a.Index == index);
-                if (pd!=null)
+                if (pd != null)
                 {
                     //替换文件
-                    js.Remove(pd);                    
+                    js.Remove(pd);
                 }
                 js.Add(sp);
             }
@@ -671,7 +714,7 @@ namespace NetConfig
             {
                 MessageBox.Show("保存文件失败");
             }
-          
+
         }
         //读取配置文件
         private void btnReadConfig_Click(object sender, EventArgs e)
@@ -690,7 +733,7 @@ namespace NetConfig
                 int.TryParse(comboBox_MQTT_Index.SelectedItem.ToString(), out index);
                 var js = JsonConvert.DeserializeObject<List<SavePackage>>(readText);
                 var pd = js.Find(a => a.Index == index);
-                if (pd==null)
+                if (pd == null)
                 {
                     MessageBox.Show($"没有序号为{index}的配置文件");
                     return;
@@ -708,8 +751,9 @@ namespace NetConfig
                 if (mess.data.SubTopic != null)
                 {
                     var sub = mess.data.SubTopic;
-                    textBox_TOPIC_Subscribe_TopicName.Text = sub.Topic;
-                    comboBox_TOPIC_Subscribe_Qos.SelectedItem = sub.Qos;
+                    SetLvSub(sub);
+                    //textBox_TOPIC_Subscribe_TopicName.Text = sub.Topic;
+                    //comboBox_TOPIC_Subscribe_Qos.SelectedItem = sub.Qos;
                 }
                 if (mess.data.PubTopic != null)
                 {
@@ -742,6 +786,95 @@ namespace NetConfig
                 MessageBox.Show("配置文件不合法，请确认");
             }
 
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            if (lvSub.Items.Count >= 5)
+            {
+                MessageBox.Show("最多只能添加5个主题");
+                return;
+            }
+            string topic = textBox_TOPIC_Subscribe_TopicName.Text.Trim();
+            var qos = comboBox_TOPIC_Subscribe_Qos.SelectedItem.ToString();
+            if (string.IsNullOrEmpty(topic))
+            {
+                MessageBox.Show("订阅主题不能为空");
+                return;
+            }
+            //检测是否有相同的主题
+            foreach (ListViewItem item in lvSub.Items)
+            {
+                if (item.Text==topic)
+                {
+                    MessageBox.Show("不能添加相同的主题");
+                    return;
+                }
+            }
+            
+            lvSub.BeginUpdate();
+            ListViewItem lv = new ListViewItem();
+            lv.Text = topic;
+            lv.SubItems.Add(qos);
+            //lv.SubItems.Add(Data[1]);
+            //lv.SubItems.Add(Data[2]);
+            //lv.SubItems.Add(Data[3]);
+            //lv.SubItems.Add(Data[4]);
+            //lv.SubItems.Add(Data[5]);
+
+            lvSub.Items.Insert(0, lv);
+            //lvSub.Items.Add(topic, qos, 0);
+            lvSub.EndUpdate();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            //lvSub.Items.
+            //for (int i = lvSub.SelectedItems.Count - 1; i >= 0; i--)
+            //{
+            //    ListViewItem item = lvSub.SelectedItems[i];
+            //    lvSub.Items.Remove(item);
+            //}
+            //List<ListViewItem> items = new List<ListViewItem>();
+            //for (int i = 0; i < lvSub.Items.Count; i++)
+            //{
+            //    if (lvSub.Items[i].Checked)
+            //    {
+            //        items.Add(lvSub.Items[i]);
+            //        //lvSub.Items.Remove(lvSub.Items[i]);
+            //    }
+            //}
+            foreach (ListViewItem item in lvSub.Items)
+            {
+                if (item.Checked)
+                {
+                    item.Remove();
+                }
+            }
+        }
+        public List<SubMessage> GetSubMessage()
+        {
+            List<SubMessage> list = new List<SubMessage>();
+            foreach (ListViewItem item in lvSub.Items)
+            {
+                string Top = item.Text;
+                string q = item.SubItems[1].Text;
+                list.Add(new SubMessage { Topic = item.Text, Qos = int.Parse(q) });
+            }
+            return list;
+        }
+        public void SetLvSub(List<SubMessage> list)
+        {
+            lvSub.BeginUpdate();
+            lvSub.Items.Clear();
+            foreach (var item in list)
+            {
+                ListViewItem lv = new ListViewItem();
+                lv.Text = item.Topic;
+                lv.SubItems.Add(item.Qos.ToString());
+                lvSub.Items.Add(lv);
+            }
+            lvSub.EndUpdate();
         }
     }
 }

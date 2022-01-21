@@ -54,7 +54,6 @@ namespace NetConfig
             this.label6 = new System.Windows.Forms.Label();
             this.btnSendMessage = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.label18 = new System.Windows.Forms.Label();
             this.textBox_TOPIC_Publish_Interval = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.comboBox_TOPIC_Publish_Qos = new System.Windows.Forms.ComboBox();
@@ -75,7 +74,6 @@ namespace NetConfig
             this.label39 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
             this.groupBox17 = new System.Windows.Forms.GroupBox();
-            this.label31 = new System.Windows.Forms.Label();
             this.textBox_TOPIC_Will_Content = new System.Windows.Forms.TextBox();
             this.label32 = new System.Windows.Forms.Label();
             this.comboBox_TOPIC_Will_Qos = new System.Windows.Forms.ComboBox();
@@ -89,6 +87,9 @@ namespace NetConfig
             this.readStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnReadConfig = new System.Windows.Forms.Button();
+            this.lvSub = new System.Windows.Forms.ListView();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.groupBox6.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox10.SuspendLayout();
@@ -99,7 +100,7 @@ namespace NetConfig
             // 
             // btnClient
             // 
-            this.btnClient.Location = new System.Drawing.Point(382, 29);
+            this.btnClient.Location = new System.Drawing.Point(335, 29);
             this.btnClient.Name = "btnClient";
             this.btnClient.Size = new System.Drawing.Size(63, 23);
             this.btnClient.TabIndex = 0;
@@ -110,7 +111,7 @@ namespace NetConfig
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 32);
+            this.label1.Location = new System.Drawing.Point(59, 32);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 12);
             this.label1.TabIndex = 2;
@@ -118,11 +119,13 @@ namespace NetConfig
             // 
             // txtPort
             // 
+            this.txtPort.Enabled = false;
             this.txtPort.Location = new System.Drawing.Point(286, 29);
             this.txtPort.Name = "txtPort";
             this.txtPort.Size = new System.Drawing.Size(78, 21);
             this.txtPort.TabIndex = 3;
             this.txtPort.Text = "666";
+            this.txtPort.Visible = false;
             this.txtPort.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPort_KeyPress);
             // 
             // groupBox6
@@ -149,7 +152,7 @@ namespace NetConfig
             this.groupBox6.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox6.Size = new System.Drawing.Size(427, 410);
+            this.groupBox6.Size = new System.Drawing.Size(409, 284);
             this.groupBox6.TabIndex = 4;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "MQTT";
@@ -157,14 +160,15 @@ namespace NetConfig
             // comboBox_MQTT_Index
             // 
             this.comboBox_MQTT_Index.FormattingEnabled = true;
-            this.comboBox_MQTT_Index.Location = new System.Drawing.Point(95, 24);
+            this.comboBox_MQTT_Index.Location = new System.Drawing.Point(301, 19);
             this.comboBox_MQTT_Index.Name = "comboBox_MQTT_Index";
             this.comboBox_MQTT_Index.Size = new System.Drawing.Size(121, 20);
             this.comboBox_MQTT_Index.TabIndex = 22;
+            this.comboBox_MQTT_Index.Visible = false;
             // 
             // textBox_SYS_uuid
             // 
-            this.textBox_SYS_uuid.Location = new System.Drawing.Point(94, 61);
+            this.textBox_SYS_uuid.Location = new System.Drawing.Point(92, 18);
             this.textBox_SYS_uuid.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_SYS_uuid.Name = "textBox_SYS_uuid";
             this.textBox_SYS_uuid.Size = new System.Drawing.Size(183, 21);
@@ -173,7 +177,7 @@ namespace NetConfig
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(54, 65);
+            this.label4.Location = new System.Drawing.Point(53, 28);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(35, 12);
@@ -182,7 +186,7 @@ namespace NetConfig
             // 
             // textBox_MQTT_KeepAliveTime
             // 
-            this.textBox_MQTT_KeepAliveTime.Location = new System.Drawing.Point(94, 326);
+            this.textBox_MQTT_KeepAliveTime.Location = new System.Drawing.Point(92, 227);
             this.textBox_MQTT_KeepAliveTime.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_MQTT_KeepAliveTime.Name = "textBox_MQTT_KeepAliveTime";
             this.textBox_MQTT_KeepAliveTime.Size = new System.Drawing.Size(76, 21);
@@ -190,7 +194,7 @@ namespace NetConfig
             // 
             // textBox_MQTT_Password
             // 
-            this.textBox_MQTT_Password.Location = new System.Drawing.Point(94, 251);
+            this.textBox_MQTT_Password.Location = new System.Drawing.Point(92, 168);
             this.textBox_MQTT_Password.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_MQTT_Password.Name = "textBox_MQTT_Password";
             this.textBox_MQTT_Password.PasswordChar = '*';
@@ -200,7 +204,7 @@ namespace NetConfig
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(34, 250);
+            this.label10.Location = new System.Drawing.Point(33, 173);
             this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(59, 12);
@@ -210,7 +214,7 @@ namespace NetConfig
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(4, 324);
+            this.label12.Location = new System.Drawing.Point(3, 231);
             this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(89, 12);
@@ -219,7 +223,7 @@ namespace NetConfig
             // 
             // textBox_MQTT_User
             // 
-            this.textBox_MQTT_User.Location = new System.Drawing.Point(94, 213);
+            this.textBox_MQTT_User.Location = new System.Drawing.Point(92, 138);
             this.textBox_MQTT_User.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_MQTT_User.Name = "textBox_MQTT_User";
             this.textBox_MQTT_User.Size = new System.Drawing.Size(152, 21);
@@ -228,7 +232,7 @@ namespace NetConfig
             // comboBox_MQTT_Ver
             // 
             this.comboBox_MQTT_Ver.FormattingEnabled = true;
-            this.comboBox_MQTT_Ver.Location = new System.Drawing.Point(94, 289);
+            this.comboBox_MQTT_Ver.Location = new System.Drawing.Point(92, 198);
             this.comboBox_MQTT_Ver.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox_MQTT_Ver.Name = "comboBox_MQTT_Ver";
             this.comboBox_MQTT_Ver.Size = new System.Drawing.Size(92, 20);
@@ -237,7 +241,7 @@ namespace NetConfig
             // checkBox_MQTT_CleanSession
             // 
             this.checkBox_MQTT_CleanSession.AutoSize = true;
-            this.checkBox_MQTT_CleanSession.Location = new System.Drawing.Point(94, 364);
+            this.checkBox_MQTT_CleanSession.Location = new System.Drawing.Point(92, 257);
             this.checkBox_MQTT_CleanSession.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox_MQTT_CleanSession.Name = "checkBox_MQTT_CleanSession";
             this.checkBox_MQTT_CleanSession.Size = new System.Drawing.Size(96, 16);
@@ -248,7 +252,7 @@ namespace NetConfig
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(55, 213);
+            this.label9.Location = new System.Drawing.Point(54, 144);
             this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(35, 12);
@@ -258,7 +262,7 @@ namespace NetConfig
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(10, 287);
+            this.label11.Location = new System.Drawing.Point(9, 202);
             this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(83, 12);
@@ -267,7 +271,7 @@ namespace NetConfig
             // 
             // textBox_MQTT_ClientID
             // 
-            this.textBox_MQTT_ClientID.Location = new System.Drawing.Point(94, 175);
+            this.textBox_MQTT_ClientID.Location = new System.Drawing.Point(92, 108);
             this.textBox_MQTT_ClientID.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_MQTT_ClientID.Name = "textBox_MQTT_ClientID";
             this.textBox_MQTT_ClientID.Size = new System.Drawing.Size(307, 21);
@@ -276,7 +280,7 @@ namespace NetConfig
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(28, 176);
+            this.label8.Location = new System.Drawing.Point(27, 115);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(65, 12);
@@ -285,7 +289,7 @@ namespace NetConfig
             // 
             // textBox_MQTT_Port
             // 
-            this.textBox_MQTT_Port.Location = new System.Drawing.Point(94, 137);
+            this.textBox_MQTT_Port.Location = new System.Drawing.Point(92, 78);
             this.textBox_MQTT_Port.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_MQTT_Port.Name = "textBox_MQTT_Port";
             this.textBox_MQTT_Port.Size = new System.Drawing.Size(76, 21);
@@ -294,7 +298,7 @@ namespace NetConfig
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(55, 139);
+            this.label7.Location = new System.Drawing.Point(54, 86);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(35, 12);
@@ -303,7 +307,7 @@ namespace NetConfig
             // 
             // textBox_MQTT_DomainIP
             // 
-            this.textBox_MQTT_DomainIP.Location = new System.Drawing.Point(94, 99);
+            this.textBox_MQTT_DomainIP.Location = new System.Drawing.Point(92, 48);
             this.textBox_MQTT_DomainIP.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_MQTT_DomainIP.Name = "textBox_MQTT_DomainIP";
             this.textBox_MQTT_DomainIP.Size = new System.Drawing.Size(307, 21);
@@ -312,7 +316,7 @@ namespace NetConfig
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(25, 102);
+            this.label6.Location = new System.Drawing.Point(24, 57);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(65, 12);
@@ -321,7 +325,7 @@ namespace NetConfig
             // 
             // btnSendMessage
             // 
-            this.btnSendMessage.Location = new System.Drawing.Point(524, 29);
+            this.btnSendMessage.Location = new System.Drawing.Point(493, 29);
             this.btnSendMessage.Name = "btnSendMessage";
             this.btnSendMessage.Size = new System.Drawing.Size(63, 23);
             this.btnSendMessage.TabIndex = 5;
@@ -331,31 +335,20 @@ namespace NetConfig
             // 
             // groupBox8
             // 
-            this.groupBox8.Controls.Add(this.label18);
             this.groupBox8.Controls.Add(this.textBox_TOPIC_Publish_Interval);
             this.groupBox8.Controls.Add(this.label17);
             this.groupBox8.Controls.Add(this.comboBox_TOPIC_Publish_Qos);
             this.groupBox8.Controls.Add(this.label16);
             this.groupBox8.Controls.Add(this.textBox_TOPIC_Publish_TopicName);
             this.groupBox8.Controls.Add(this.label15);
-            this.groupBox8.Location = new System.Drawing.Point(442, 71);
+            this.groupBox8.Location = new System.Drawing.Point(425, 71);
             this.groupBox8.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox8.Size = new System.Drawing.Size(358, 80);
+            this.groupBox8.Size = new System.Drawing.Size(375, 80);
             this.groupBox8.TabIndex = 6;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "发布";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(355, 53);
-            this.label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(17, 12);
-            this.label18.TabIndex = 6;
-            this.label18.Text = "秒";
             // 
             // textBox_TOPIC_Publish_Interval
             // 
@@ -415,15 +408,18 @@ namespace NetConfig
             // 
             // groupBox10
             // 
+            this.groupBox10.Controls.Add(this.btnDelete);
+            this.groupBox10.Controls.Add(this.btnAdd);
+            this.groupBox10.Controls.Add(this.lvSub);
             this.groupBox10.Controls.Add(this.comboBox_TOPIC_Subscribe_Qos);
             this.groupBox10.Controls.Add(this.label22);
             this.groupBox10.Controls.Add(this.textBox_TOPIC_Subscribe_TopicName);
             this.groupBox10.Controls.Add(this.label23);
-            this.groupBox10.Location = new System.Drawing.Point(443, 155);
+            this.groupBox10.Location = new System.Drawing.Point(425, 155);
             this.groupBox10.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox10.Size = new System.Drawing.Size(354, 80);
+            this.groupBox10.Size = new System.Drawing.Size(372, 200);
             this.groupBox10.TabIndex = 7;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "订阅";
@@ -474,16 +470,16 @@ namespace NetConfig
             this.gbNet.Controls.Add(this.label40);
             this.gbNet.Controls.Add(this.label39);
             this.gbNet.Controls.Add(this.label38);
-            this.gbNet.Location = new System.Drawing.Point(442, 358);
+            this.gbNet.Location = new System.Drawing.Point(12, 360);
             this.gbNet.Name = "gbNet";
-            this.gbNet.Size = new System.Drawing.Size(354, 122);
+            this.gbNet.Size = new System.Drawing.Size(408, 122);
             this.gbNet.TabIndex = 8;
             this.gbNet.TabStop = false;
             this.gbNet.Text = "网络";
             // 
             // txtGw
             // 
-            this.txtGw.Location = new System.Drawing.Point(83, 68);
+            this.txtGw.Location = new System.Drawing.Point(83, 84);
             this.txtGw.Name = "txtGw";
             this.txtGw.Size = new System.Drawing.Size(180, 26);
             this.txtGw.TabIndex = 4;
@@ -491,7 +487,7 @@ namespace NetConfig
             // 
             // txtMask
             // 
-            this.txtMask.Location = new System.Drawing.Point(83, 39);
+            this.txtMask.Location = new System.Drawing.Point(83, 47);
             this.txtMask.Name = "txtMask";
             this.txtMask.Size = new System.Drawing.Size(180, 26);
             this.txtMask.TabIndex = 3;
@@ -507,16 +503,17 @@ namespace NetConfig
             // 
             // txtMac
             // 
-            this.txtMac.Location = new System.Drawing.Point(83, 98);
+            this.txtMac.Location = new System.Drawing.Point(284, 98);
             this.txtMac.Name = "txtMac";
             this.txtMac.Size = new System.Drawing.Size(180, 21);
             this.txtMac.TabIndex = 1;
             this.txtMac.Text = "72.81.81.81.85.103";
+            this.txtMac.Visible = false;
             // 
             // label40
             // 
             this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(16, 70);
+            this.label40.Location = new System.Drawing.Point(16, 86);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(65, 12);
             this.label40.TabIndex = 0;
@@ -525,7 +522,7 @@ namespace NetConfig
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(16, 43);
+            this.label39.Location = new System.Drawing.Point(16, 51);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(65, 12);
             this.label39.TabIndex = 0;
@@ -542,31 +539,20 @@ namespace NetConfig
             // 
             // groupBox17
             // 
-            this.groupBox17.Controls.Add(this.label31);
             this.groupBox17.Controls.Add(this.textBox_TOPIC_Will_Content);
             this.groupBox17.Controls.Add(this.label32);
             this.groupBox17.Controls.Add(this.comboBox_TOPIC_Will_Qos);
             this.groupBox17.Controls.Add(this.label33);
             this.groupBox17.Controls.Add(this.textBox_TOPIC_Will_TopicName);
             this.groupBox17.Controls.Add(this.label34);
-            this.groupBox17.Location = new System.Drawing.Point(442, 239);
+            this.groupBox17.Location = new System.Drawing.Point(425, 360);
             this.groupBox17.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox17.Name = "groupBox17";
             this.groupBox17.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox17.Size = new System.Drawing.Size(350, 116);
+            this.groupBox17.Size = new System.Drawing.Size(372, 125);
             this.groupBox17.TabIndex = 9;
             this.groupBox17.TabStop = false;
             this.groupBox17.Text = "遗言";
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(355, 53);
-            this.label31.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(17, 12);
-            this.label31.TabIndex = 6;
-            this.label31.Text = "秒";
             // 
             // textBox_TOPIC_Will_Content
             // 
@@ -626,7 +612,7 @@ namespace NetConfig
             // 
             // btnRead
             // 
-            this.btnRead.Location = new System.Drawing.Point(595, 29);
+            this.btnRead.Location = new System.Drawing.Point(572, 29);
             this.btnRead.Name = "btnRead";
             this.btnRead.Size = new System.Drawing.Size(63, 23);
             this.btnRead.TabIndex = 10;
@@ -636,7 +622,7 @@ namespace NetConfig
             // 
             // textbox_IpAddress
             // 
-            this.textbox_IpAddress.Location = new System.Drawing.Point(75, 27);
+            this.textbox_IpAddress.Location = new System.Drawing.Point(123, 27);
             this.textbox_IpAddress.Name = "textbox_IpAddress";
             this.textbox_IpAddress.Size = new System.Drawing.Size(167, 26);
             this.textbox_IpAddress.TabIndex = 21;
@@ -644,7 +630,7 @@ namespace NetConfig
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(453, 29);
+            this.btnClose.Location = new System.Drawing.Point(414, 29);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(63, 23);
             this.btnClose.TabIndex = 22;
@@ -669,7 +655,7 @@ namespace NetConfig
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(666, 29);
+            this.btnSave.Location = new System.Drawing.Point(651, 29);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(63, 23);
             this.btnSave.TabIndex = 10;
@@ -679,13 +665,47 @@ namespace NetConfig
             // 
             // btnReadConfig
             // 
-            this.btnReadConfig.Location = new System.Drawing.Point(737, 29);
+            this.btnReadConfig.Location = new System.Drawing.Point(730, 29);
             this.btnReadConfig.Name = "btnReadConfig";
             this.btnReadConfig.Size = new System.Drawing.Size(63, 23);
             this.btnReadConfig.TabIndex = 10;
             this.btnReadConfig.Text = "读取配置";
             this.btnReadConfig.UseVisualStyleBackColor = true;
             this.btnReadConfig.Click += new System.EventHandler(this.btnReadConfig_Click);
+            // 
+            // lvSub
+            // 
+            this.lvSub.BackColor = System.Drawing.SystemColors.Window;
+            this.lvSub.CheckBoxes = true;
+            this.lvSub.FullRowSelect = true;
+            this.lvSub.GridLines = true;
+            this.lvSub.HideSelection = false;
+            this.lvSub.Location = new System.Drawing.Point(5, 73);
+            this.lvSub.Name = "lvSub";
+            this.lvSub.Size = new System.Drawing.Size(363, 117);
+            this.lvSub.TabIndex = 4;
+            this.lvSub.UseCompatibleStateImageBehavior = false;
+            this.lvSub.View = System.Windows.Forms.View.Details;
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Location = new System.Drawing.Point(197, 45);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnAdd.TabIndex = 5;
+            this.btnAdd.Text = "添加订阅";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(274, 43);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.TabIndex = 5;
+            this.btnDelete.Text = "取消订阅";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // FrmNetConfig
             // 
@@ -707,6 +727,7 @@ namespace NetConfig
             this.Controls.Add(this.txtPort);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnClient);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmNetConfig";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -755,7 +776,6 @@ namespace NetConfig
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnSendMessage;
         private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox textBox_TOPIC_Publish_Interval;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ComboBox comboBox_TOPIC_Publish_Qos;
@@ -773,7 +793,6 @@ namespace NetConfig
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.GroupBox groupBox17;
-        private System.Windows.Forms.Label label31;
         private System.Windows.Forms.TextBox textBox_TOPIC_Will_Content;
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.ComboBox comboBox_TOPIC_Will_Qos;
@@ -791,6 +810,9 @@ namespace NetConfig
         private System.Windows.Forms.ComboBox comboBox_MQTT_Index;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnReadConfig;
+        private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.ListView lvSub;
+        private System.Windows.Forms.Button btnDelete;
     }
 }
 
