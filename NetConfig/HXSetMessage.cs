@@ -13,6 +13,7 @@ namespace NetConfig
         public string action { get; set; }
         public int clientidx { get; set; } = 0;//标识Mqtt的序号
         public HXSetMessage data { get; set; }
+        public DateTime DateTime { get; set; } = DateTime.Now;
     }
     //配置文件
     public class SavePackage
@@ -39,7 +40,8 @@ namespace NetConfig
         public int CleanSessionMark { get; set; } //= 0;
         public int KeepAliveTime { get; set; } //= 30;
         public PublishMessage PubTopic { get; set; }
-        public SubMessage SubTopic { get; set; }
+        //public SubMessage SubTopic { get; set; }
+        public List<SubMessage> SubTopic { get; set; }
         public WillMessage WillTopic { get; set; }
         public LanMessage Lan { get; set; }
 

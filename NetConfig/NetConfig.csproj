@@ -41,16 +41,16 @@
     <Reference Include="ControlLibrary.IPControl">
       <HintPath>..\..\..\..\WorkTest\ControlLibrary\ControlLibrary.IPControl\bin\Debug\ControlLibrary.IPControl.dll</HintPath>
     </Reference>
-    <Reference Include="Cowboy.Sockets, Version=1.3.14.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Cowboy.Sockets, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Cowboy.Sockets\bin\Release\Cowboy.Sockets.dll</HintPath>
+      <HintPath>.\Cowboy.Sockets.dll</HintPath>
     </Reference>
     <Reference Include="IpControl">
       <HintPath>E:\source\IpControl\IpControl\bin\Debug\IpControl.dll</HintPath>
     </Reference>
     <Reference Include="Logrila.Logging, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Cowboy.Sockets\bin\Release\Logrila.Logging.dll</HintPath>
+      <HintPath>.\Logrila.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -82,15 +82,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrmConfig.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="FrmConfig.cs" />
     <Compile Include="FrmConfig.Designer.cs">
       <DependentUpon>FrmConfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmTestTeaAlgorithm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="FrmTestTeaAlgorithm.cs" />
     <Compile Include="FrmTestTeaAlgorithm.Designer.cs">
       <DependentUpon>FrmTestTeaAlgorithm.cs</DependentUpon>
     </Compile>
