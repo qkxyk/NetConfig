@@ -140,6 +140,13 @@ namespace NetConfig
             var text = Encoding.UTF8.GetString(e.Data, e.DataOffset, e.DataLength);
             try
             {
+                TestPack pack = JsonConvert.DeserializeObject<TestPack>(text);
+                if (pack.action == "readbid_ack")//解密数据
+                {
+                    ReceiveBid rb = JsonConvert.DeserializeObject<ReceiveBid>(text);
+                    EncryptData(rb.data.UUID, rb.data.SERIAL, rb.data.IMEI);
+                    return;
+                }
                 //接收的数据进行反序列化
                 PackageData mess = JsonConvert.DeserializeObject<PackageData>(text);
 
@@ -286,9 +293,9 @@ namespace NetConfig
             mess.UserName = User;
 
             string password = textBox_MQTT_Password.Text;
-            if (password.Length >= 10)
+            if (password.Length >= 20)
             {
-                MessageBox.Show("密码长度不能超过9个字符");
+                MessageBox.Show("密码长度不能超过19个字符");
             }
             mess.UserPwd = password;
             if (comboBox_MQTT_Ver.SelectedItem == null)
@@ -825,6 +832,109 @@ namespace NetConfig
                 lvSub.Items.Add(lv);
             }
             lvSub.EndUpdate();
+        }
+
+        /// <summary>
+        /// 发送解密指令
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnEncrypt_Click(object sender, EventArgs e)
+        {
+            int index = 0;
+            int.TryParse(comboBox_MQTT_Index.SelectedItem.ToString(), out index);
+            ReadBid sm = new ReadBid { action = "readbid" };
+            string message = JsonConvert.SerializeObject(sm);
+            if (_client.State == TcpSocketConnectionState.Connected)
+            {
+                _client.Send(Encoding.UTF8.GetBytes(message));
+            }
+            else
+            {
+                MessageBox.Show("请连接设备");
+            }
+            readStatus.Text = "获取解密指令已发送";
+        }
+
+        /// <summary>
+        /// imei为第一次加密的key，uuid为第二次加密的key
+        /// </summary>
+        /// <param name="uuid"></param>
+        /// <param name="serial"></param>
+        /// <param name="imei"></param>
+        private void EncryptData(string uuid, string serial, string imei)
+        {
+            NewTea tea = new NewTea();
+            byte[] byContent = tea.strToToHexByte(serial);
+            var ByKey = GetKeyBytes(imei);
+            if (ByKey == null)
+            {
+                MessageBox.Show("密钥不正确");
+                return;
+            }
+            var byFirstResult = tea.EncryptByte(byContent, ByKey, true);
+            string strFirst = tea.byteToHexStr(byFirstResult);
+            var bySecondKey = GetKeyBytes(uuid);
+            if (bySecondKey == null)
+            {
+                MessageBox.Show("密钥不正确");
+                return;
+            }
+            var bySecondResult = tea.EncryptByte(byFirstResult, bySecondKey, true);
+            string strSecondResult = tea.byteToHexStr(bySecondResult);
+            SendBid sb = new SendBid { action = "decrypt", License = strSecondResult };
+            string message = JsonConvert.SerializeObject(sb);
+            if (_client.State == TcpSocketConnectionState.Connected)
+            {
+                _client.Send(Encoding.UTF8.GetBytes(message));
+            }
+            else
+            {
+                MessageBox.Show("请连接设备");
+            }
+            readStatus.Text = "解密指令已成功发送";
+        }
+        /// <summary>
+        /// 返回16位长度的key
+        /// </summary>
+        /// <param name="strKey">key字符串</param>
+        /// <returns></returns>
+        byte[] GetKeyBytes(string strKey)
+        {
+            byte[] byKey = new byte[16];
+            int length = strKey.Length;
+            byte[] by = Encoding.UTF8.GetBytes(strKey);
+            if (length < 15)
+            {
+                return null;
+            }
+            else if (length == 15)
+            {
+                //按位异或
+                int cal = 0;
+                for (int i = 0; i < 15; i++)
+                {
+                    cal ^= by[i];
+                }
+                Array.Copy(by, 0, byKey, 0, 15);
+                byKey[15] = (byte)cal;
+            }
+            else
+            {
+                Array.Copy(by, 0, byKey, 0, 16);
+            }
+            return byKey;
+        }
+
+
+        private void lvSub_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (lvSub.SelectedItems.Count == 0) return;
+            else
+            {
+                string topic = lvSub.SelectedItems[0].Text;
+                textBox_TOPIC_Subscribe_TopicName.Text = topic;
+            }
         }
     }
 }

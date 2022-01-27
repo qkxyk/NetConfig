@@ -82,11 +82,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrmConfig.cs" />
+    <Compile Include="FrmConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FrmConfig.Designer.cs">
       <DependentUpon>FrmConfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmTestTeaAlgorithm.cs" />
+    <Compile Include="FrmTestTeaAlgorithm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FrmTestTeaAlgorithm.Designer.cs">
       <DependentUpon>FrmTestTeaAlgorithm.cs</DependentUpon>
     </Compile>

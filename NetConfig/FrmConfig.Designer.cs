@@ -63,6 +63,9 @@ namespace NetConfig
             this.textBox_TOPIC_Publish_TopicName = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.lvSub = new System.Windows.Forms.ListView();
             this.comboBox_TOPIC_Subscribe_Qos = new System.Windows.Forms.ComboBox();
             this.label22 = new System.Windows.Forms.Label();
             this.textBox_TOPIC_Subscribe_TopicName = new System.Windows.Forms.TextBox();
@@ -90,9 +93,7 @@ namespace NetConfig
             this.readStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnReadConfig = new System.Windows.Forms.Button();
-            this.lvSub = new System.Windows.Forms.ListView();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnEncrypt = new System.Windows.Forms.Button();
             this.groupBox6.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox10.SuspendLayout();
@@ -103,7 +104,7 @@ namespace NetConfig
             // 
             // btnClient
             // 
-            this.btnClient.Location = new System.Drawing.Point(382, 29);
+            this.btnClient.Location = new System.Drawing.Point(339, 29);
             this.btnClient.Name = "btnClient";
             this.btnClient.Size = new System.Drawing.Size(63, 23);
             this.btnClient.TabIndex = 0;
@@ -114,7 +115,7 @@ namespace NetConfig
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 32);
+            this.label1.Location = new System.Drawing.Point(5, 32);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 12);
             this.label1.TabIndex = 2;
@@ -123,7 +124,7 @@ namespace NetConfig
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(248, 34);
+            this.label2.Location = new System.Drawing.Point(242, 34);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 12);
             this.label2.TabIndex = 2;
@@ -131,9 +132,9 @@ namespace NetConfig
             // 
             // txtPort
             // 
-            this.txtPort.Location = new System.Drawing.Point(286, 29);
+            this.txtPort.Location = new System.Drawing.Point(280, 29);
             this.txtPort.Name = "txtPort";
-            this.txtPort.Size = new System.Drawing.Size(78, 21);
+            this.txtPort.Size = new System.Drawing.Size(45, 21);
             this.txtPort.TabIndex = 3;
             this.txtPort.Text = "666";
             this.txtPort.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPort_KeyPress);
@@ -344,7 +345,7 @@ namespace NetConfig
             // 
             // btnSendMessage
             // 
-            this.btnSendMessage.Location = new System.Drawing.Point(524, 29);
+            this.btnSendMessage.Location = new System.Drawing.Point(467, 29);
             this.btnSendMessage.Name = "btnSendMessage";
             this.btnSendMessage.Size = new System.Drawing.Size(63, 23);
             this.btnSendMessage.TabIndex = 5;
@@ -442,6 +443,38 @@ namespace NetConfig
             this.groupBox10.TabIndex = 7;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "订阅";
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(297, 50);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.TabIndex = 5;
+            this.btnDelete.Text = "取消订阅";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Location = new System.Drawing.Point(206, 50);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnAdd.TabIndex = 5;
+            this.btnAdd.Text = "添加订阅";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // lvSub
+            // 
+            this.lvSub.CheckBoxes = true;
+            this.lvSub.HideSelection = false;
+            this.lvSub.Location = new System.Drawing.Point(5, 94);
+            this.lvSub.MultiSelect = false;
+            this.lvSub.Name = "lvSub";
+            this.lvSub.Size = new System.Drawing.Size(387, 108);
+            this.lvSub.TabIndex = 4;
+            this.lvSub.UseCompatibleStateImageBehavior = false;
+            this.lvSub.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvSub_ItemSelectionChanged);
             // 
             // comboBox_TOPIC_Subscribe_Qos
             // 
@@ -640,7 +673,7 @@ namespace NetConfig
             // 
             // btnRead
             // 
-            this.btnRead.Location = new System.Drawing.Point(595, 29);
+            this.btnRead.Location = new System.Drawing.Point(531, 29);
             this.btnRead.Name = "btnRead";
             this.btnRead.Size = new System.Drawing.Size(63, 23);
             this.btnRead.TabIndex = 10;
@@ -650,7 +683,7 @@ namespace NetConfig
             // 
             // textbox_IpAddress
             // 
-            this.textbox_IpAddress.Location = new System.Drawing.Point(75, 27);
+            this.textbox_IpAddress.Location = new System.Drawing.Point(69, 27);
             this.textbox_IpAddress.Name = "textbox_IpAddress";
             this.textbox_IpAddress.Size = new System.Drawing.Size(167, 26);
             this.textbox_IpAddress.TabIndex = 21;
@@ -658,7 +691,7 @@ namespace NetConfig
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(453, 29);
+            this.btnClose.Location = new System.Drawing.Point(403, 29);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(63, 23);
             this.btnClose.TabIndex = 22;
@@ -683,7 +716,7 @@ namespace NetConfig
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(666, 29);
+            this.btnSave.Location = new System.Drawing.Point(595, 29);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(63, 23);
             this.btnSave.TabIndex = 10;
@@ -693,7 +726,7 @@ namespace NetConfig
             // 
             // btnReadConfig
             // 
-            this.btnReadConfig.Location = new System.Drawing.Point(737, 29);
+            this.btnReadConfig.Location = new System.Drawing.Point(659, 29);
             this.btnReadConfig.Name = "btnReadConfig";
             this.btnReadConfig.Size = new System.Drawing.Size(63, 23);
             this.btnReadConfig.TabIndex = 10;
@@ -701,41 +734,22 @@ namespace NetConfig
             this.btnReadConfig.UseVisualStyleBackColor = true;
             this.btnReadConfig.Click += new System.EventHandler(this.btnReadConfig_Click);
             // 
-            // lvSub
+            // btnEncrypt
             // 
-            this.lvSub.CheckBoxes = true;
-            this.lvSub.HideSelection = false;
-            this.lvSub.Location = new System.Drawing.Point(5, 94);
-            this.lvSub.Name = "lvSub";
-            this.lvSub.Size = new System.Drawing.Size(387, 108);
-            this.lvSub.TabIndex = 4;
-            this.lvSub.UseCompatibleStateImageBehavior = false;
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.Location = new System.Drawing.Point(206, 50);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 23);
-            this.btnAdd.TabIndex = 5;
-            this.btnAdd.Text = "添加订阅";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Location = new System.Drawing.Point(297, 50);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnDelete.TabIndex = 5;
-            this.btnDelete.Text = "取消订阅";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.btnEncrypt.Location = new System.Drawing.Point(723, 29);
+            this.btnEncrypt.Name = "btnEncrypt";
+            this.btnEncrypt.Size = new System.Drawing.Size(75, 23);
+            this.btnEncrypt.TabIndex = 24;
+            this.btnEncrypt.Text = "解密";
+            this.btnEncrypt.UseVisualStyleBackColor = true;
+            this.btnEncrypt.Click += new System.EventHandler(this.btnEncrypt_Click);
             // 
             // FrmNetConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(810, 535);
+            this.Controls.Add(this.btnEncrypt);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.textbox_IpAddress);
@@ -840,6 +854,7 @@ namespace NetConfig
         private System.Windows.Forms.ListView lvSub;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Button btnEncrypt;
     }
 }
 
