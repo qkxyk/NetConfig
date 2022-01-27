@@ -8,6 +8,47 @@ using Newtonsoft.Json.Converters;
 
 namespace NetConfig
 {
+    /// <summary>
+    /// 分辨接收的数据包
+    /// </summary>
+    public class TestPack
+    {
+        public string action { get; set; }
+    }
+    #region 加密解密数据
+    public class ReadBid
+    {
+        public string action { get; set; }//readbid
+    }
+    public class ReceiveBid
+    {
+        public string action { get; set; }//readbid_ack
+        public EncryptData data { get; set; }
+    }
+    /// <summary>
+    /// 两次加密，加密步骤如下：第二个参数为key，不足16位要补零
+    /// 1、Encrypt( SERIAL, IMEI)======>keygen
+    /// 2、 Encrypt(keygen , UUID)=======>License
+    /// </summary>
+    public class EncryptData
+    {
+        public string UUID { get; set; }
+        public string IMEI { get; set; }
+        public string SERIAL { get; set; }
+    }
+    public class SendBid
+    {
+        public string action { get; set; }//decrypt
+        public string License { get; set; }
+    }
+    #endregion
+    #region 解密后返回数据
+    public class EncryptRet
+    {
+        public string action { get; set; }
+        public string Result { get; set; }
+    }
+    #endregion
     public class PackageData
     {
         public string action { get; set; }
