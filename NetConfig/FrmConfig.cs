@@ -784,6 +784,7 @@ namespace NetConfig
         //读取配置文件
         private void btnReadConfig_Click(object sender, EventArgs e)
         {
+            //测试提交
             string file = "";
             OpenFileDialog open_file = new OpenFileDialog();
             open_file.Filter = "配置文件|*.json";
